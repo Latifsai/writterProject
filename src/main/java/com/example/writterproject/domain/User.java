@@ -1,6 +1,5 @@
 package com.example.writterproject.domain;
 
-import com.example.writterproject.domain.Task;
 import jakarta.persistence.*;
 import lombok.Data;
 
