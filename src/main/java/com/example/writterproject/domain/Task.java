@@ -2,6 +2,7 @@ package com.example.writterproject.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,11 +23,11 @@ public class Task {
 
     @NotBlank(message = "Name must be not blank")
     @Size(min = 3, max = 15, message = "Name length must be between 3 and 15")
-    private String todoName;
+    private String todoName; //:
 
     @NotBlank(message = "Description must be not blank")
     @Size(min = 1, max = 25, message = "Description length must be between 1 and 25")
-    private String description;
+    private String description; //:
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -35,7 +36,9 @@ public class Task {
     private LocalDateTime createDate;
     private LocalDateTime lastUpdate;
 
-    private LocalDateTime deadline;
+    @NotNull
+    @NotBlank
+    private LocalDateTime deadline; //:
     private ToDoStatus status;
 
 }
