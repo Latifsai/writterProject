@@ -21,7 +21,7 @@ public class TaskMapper {
         response.setLastUpdate(task.getLastUpdate());
         response.setDeadline(task.getDeadline());
         response.setStatus(task.getStatus());
-        response.setUserResponseDTO(new UserResponseDTO(task.getUser().getId(), task.getUser().getUsername()));
+        response.setUserResponseDTO(new UserResponseDTO(task.getUser().getId(), task.getUser().getUsername(), task.getUser().getEmail()));
         return response;
     }
 

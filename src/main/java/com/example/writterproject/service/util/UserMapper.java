@@ -9,13 +9,17 @@ import org.springframework.stereotype.Service;
 public class UserMapper {
 
     public UserResponseDTO toResponse(User user) {
-        return new UserResponseDTO(user.getId(), user.getUsername());
+        return new UserResponseDTO(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail());
     }
 
     public User fromDTO(AddUserRequest request) {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
+        user.setEmail(request.getEmail());
         return user;
     }
 }
