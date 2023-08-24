@@ -1,7 +1,9 @@
 package com.example.writterproject.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 import java.util.List;
@@ -15,26 +17,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull
     @NotBlank(message = "User name must be not blank")
     private String username;
 
-    @NotNull
     @NotBlank(message = "User password must be not blank")
+    @Pattern(regexp = "^[A-Za-z0-9!@#$%^&*_-]+$", message = "Password contain only latin letters and numbers")
     private String password;
 
-    @NotNull
     @NotBlank(message = "email must not be blank!")
+    @Email(message = "Invalid email format!")
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Task> todos;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private List<Role> roles;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 }

@@ -3,41 +3,42 @@ package com.example.writterproject.service;
 import com.example.writterproject.domain.User;
 import com.example.writterproject.dto.userDTO.AddUserRequest;
 import com.example.writterproject.dto.userDTO.UserResponseDTO;
+import com.example.writterproject.repository.RoleRepository;
 import com.example.writterproject.repository.UserRepository;
 import com.example.writterproject.service.util.UserMapper;
 import com.example.writterproject.service.validation.NotFoundException;
-import com.example.writterproject.service.validation.UserAlreadyExistException;
+import com.example.writterproject.service.validation.ISAlreadyExistException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository repository;
     private final UserMapper mapper;
+    private final RoleRepository roleRepository;
 
-    public UserService(UserRepository repository, UserMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
+
 
     public List<UserResponseDTO> findAll() {
         return repository.findAll().stream()
-                .map(user -> mapper.toResponse(user))
+                .map(mapper::toResponse)
                 .toList();
     }
 
     public UserResponseDTO findByUserName(String userName) {
-        User user = repository.findByUsername(userName).orElseThrow(() -> new NotFoundException("User not found!"));
+        User user = repository.findByUsername(userName)
+                .orElseThrow(() -> new NotFoundException("User not found!"));
         return mapper.toResponse(user);
     }
 
 
     public User findByUserNameForTask(String userName) {
-        User user = repository.findByUsername(userName)
+        return repository.findByUsername(userName)
                 .orElseThrow(() -> new NotFoundException("User not found!"));
-        return user;
     }
 
     public UserResponseDTO createUser(AddUserRequest request) {
@@ -46,7 +47,7 @@ public class UserService {
             User sadevUser = repository.save(user);
             return mapper.toResponse(sadevUser);
         } else {
-            throw new UserAlreadyExistException("User is exist, with username: " + request.getUsername());
+            throw new ISAlreadyExistException("User is exist, with username: " + request.getUsername());
         }
     }
 

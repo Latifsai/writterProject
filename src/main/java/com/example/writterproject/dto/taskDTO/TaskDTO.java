@@ -1,6 +1,6 @@
 package com.example.writterproject.dto.taskDTO;
 
-import com.example.writterproject.domain.ToDoStatus;
+import com.example.writterproject.domain.enums.ToDoStatus;
 import com.example.writterproject.domain.User;
 
 import java.time.LocalDateTime;

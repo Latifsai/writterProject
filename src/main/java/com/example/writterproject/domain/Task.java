@@ -1,8 +1,8 @@
 package com.example.writterproject.domain;
 
+import com.example.writterproject.domain.enums.ToDoStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Table(name = "tasks")
 public class Task {
 
     @Id
@@ -36,7 +36,6 @@ public class Task {
     private LocalDateTime createDate;
     private LocalDateTime lastUpdate;
 
-    @NotNull
     @NotBlank
     private LocalDateTime deadline; //:
     private ToDoStatus status;

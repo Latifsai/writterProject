@@ -1,8 +1,8 @@
 package com.example.writterproject.service;
 
 import com.example.writterproject.domain.Task;
-import com.example.writterproject.domain.ToDoStatus;
 import com.example.writterproject.domain.User;
+import com.example.writterproject.domain.enums.ToDoStatus;
 import com.example.writterproject.dto.taskDTO.TaskResponseListDTO;
 import com.example.writterproject.dto.taskDTO.post.AddTaskRequest;
 import com.example.writterproject.dto.taskDTO.post.TaskResponse;
@@ -10,30 +10,29 @@ import com.example.writterproject.dto.taskDTO.post.UpdateTaskRequest;
 import com.example.writterproject.repository.TaskRepository;
 import com.example.writterproject.service.util.TaskMapper;
 import com.example.writterproject.service.validation.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TaskService {
     private final TaskMapper mapper;
     private final TaskRepository repository;
     private final UserService userService;
 
 
-    public TaskService(TaskMapper mapper, TaskRepository repository, UserService userService) {
-        this.mapper = mapper;
-        this.repository = repository;
-        this.userService = userService;
-    }
-
+    @Transactional(readOnly = true)
     public List<TaskResponseListDTO> getAll() {
         return repository.findAll().
-                stream().map(task -> mapper.toTaskResponseList(task))
+                stream().map(mapper::toTaskResponseList)
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public TaskResponse findByID(Integer id) {
         Task task = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Task with id:" + id + "was not found!"));
@@ -60,15 +59,15 @@ public class TaskService {
             Task updatedTask = mapper.fromUpdateRequest(task, request);
             Task saved = repository.save(updatedTask);
             return mapper.toTaskResponse(saved);
-        }else {
-            throw  new NotFoundException("User: " + request.getUsername() + " has not rights o update!");
+        } else {
+            throw new NotFoundException("User: " + request.getUsername() + " has not rights o update!");
         }
 
     }
 
     public void delete(Integer id) {
         Task task = repository.findById(id)
-                .orElseThrow(() ->  new NotFoundException("task not found!"));
+                .orElseThrow(() -> new NotFoundException("task not found!"));
         repository.delete(task);
     }
 

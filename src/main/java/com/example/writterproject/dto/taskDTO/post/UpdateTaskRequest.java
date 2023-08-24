@@ -1,6 +1,6 @@
 package com.example.writterproject.dto.taskDTO.post;
 
-import com.example.writterproject.domain.ToDoStatus;
+import com.example.writterproject.domain.enums.ToDoStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

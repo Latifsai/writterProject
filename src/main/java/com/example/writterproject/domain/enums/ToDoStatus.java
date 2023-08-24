@@ -1,4 +1,4 @@
-package com.example.writterproject.domain;
+package com.example.writterproject.domain.enums;
 
 public enum ToDoStatus {
     Open,
