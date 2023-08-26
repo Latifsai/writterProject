@@ -13,27 +13,29 @@ import java.time.LocalDateTime;
 @Component
 public class TaskMapper {
     public TaskResponse toTaskResponse(Task task) {
-        var response = new TaskResponse();
-        response.setId(task.getId());
-        response.setTodoName(task.getTodoName());
-        response.setDescription(task.getDescription());
-        response.setCreateDate(task.getCreateDate());
-        response.setLastUpdate(task.getLastUpdate());
-        response.setDeadline(task.getDeadline());
-        response.setStatus(task.getStatus());
-        response.setUserResponseDTO(new UserResponseDTO(task.getUser().getId(), task.getUser().getUsername(), task.getUser().getEmail()));
-        return response;
+        return TaskResponse.builder()
+                .id(task.getId())
+                .todoName(task.getTodoName())
+                .description(task.getDescription())
+                .createDate(task.getCreateDate())
+                .lastUpdate(task.getLastUpdate())
+                .deadline(task.getDeadline())
+                .status(task.getStatus())
+                .userResponseDTO(new UserResponseDTO(task.getUser().getId(),
+                        task.getUser().getUsername(), task.getUser().getEmail()))
+                .build();
     }
 
     public TaskResponseListDTO toTaskResponseList(Task task) {
-        return new TaskResponseListDTO(
-                task.getId(),
-                task.getTodoName(),
-                task.getDescription(),
-                task.getCreateDate(),
-                task.getLastUpdate(),
-                task.getDeadline(),
-                task.getStatus());
+       return TaskResponseListDTO.builder()
+               .id(task.getId())
+               .todoName(task.getTodoName())
+               .description(task.getDescription())
+               .createDate(task.getCreateDate())
+               .lastUpdate(task.getLastUpdate())
+               .deadline(task.getDeadline())
+               .status(task.getStatus())
+               .build();
     }
 
 
