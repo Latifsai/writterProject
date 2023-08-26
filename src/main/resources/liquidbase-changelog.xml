@@ -5,14 +5,32 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
 		https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
-    <changeSet id="create.table.users" author="author">
+    <changeSet id="create.table.roles" author="latif">
+        <createTable tableName="roles">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(70)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="insert.default.roles" author="latif">
+        <insert tableName="roles">
+            <column name="name" value="admin"/>
+        </insert>
+        <insert tableName="roles">
+            <column name="name" value="user"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="create.table.users" author="latif">
         <createTable tableName="users">
 
             <column name="id" type="INT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
-            <column name="username" type="VARCHAR(255)">
+            <column name="username" type="VARCHAR(55)">
                 <constraints nullable="false"/>
             </column>
 
@@ -24,37 +42,27 @@
                 <constraints nullable="false"/>
             </column>
 
+            <column name="role_id" type="INT">
+                <constraints nullable="false" />
+            </column>
+
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="users" baseColumnNames="role_id"
-                                 constraintName="fk_user_role_id" referencedTableName="role"
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="role_id"
+                                 constraintName="fk_user_role_id"
+                                 referencedTableName="roles"
                                  referencedColumnNames="id"/>
 
     </changeSet>
 
-    <changeSet id="create.table.roles" author="author">
-        <createTable tableName="roles">
-            <column name="id" type="INT" autoIncrement="true">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="name" type="VARCHAR(70)"/>
-        </createTable>
-    </changeSet>
-
-    <changeSet id="insert.default.roles" author="author">
-        <insert tableName="roles">
-            <column name="name" value="admin"/>
-        </insert>
-        <insert tableName="roles">
-            <column name="name" value="user"/>
-        </insert>
-    </changeSet>
 
     <changeSet id="insert.default.users" author="author">
         <insert tableName="users">
             <column name="username" value = "Administrator"/>
             <column name="password" value = "pass111111"/>
             <column name="email" value = "admin@company.com"/>
+            <column name="role_id" value="1" />
         </insert>
     </changeSet>
 
