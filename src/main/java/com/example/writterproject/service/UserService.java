@@ -1,5 +1,6 @@
 package com.example.writterproject.service;
 
+import com.example.writterproject.domain.Role;
 import com.example.writterproject.domain.User;
 import com.example.writterproject.dto.userDTO.AddUserRequest;
 import com.example.writterproject.dto.userDTO.UserResponseDTO;
@@ -20,7 +21,6 @@ public class UserService {
     private final UserRepository repository;
     private final UserMapper mapper;
     private final RoleRepository roleRepository;
-
 
 
     public List<UserResponseDTO> findAll() {
@@ -44,6 +44,10 @@ public class UserService {
     public UserResponseDTO createUser(AddUserRequest request) {
         if (repository.findByUsername(request.getUsername()).isEmpty()) {
             User user = mapper.fromDTO(request);
+            Role defaultRole = roleRepository.findById(2)
+                    .orElseThrow(() -> new NotFoundException("Role was not created!"));
+
+            user.setRole(defaultRole);
             User sadevUser = repository.save(user);
             return mapper.toResponse(sadevUser);
         } else {

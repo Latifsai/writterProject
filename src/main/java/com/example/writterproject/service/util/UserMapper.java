@@ -20,7 +20,6 @@ public class UserMapper {
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
         user.setEmail(request.getEmail());
-        user.setRole(request.getRole());
         return user;
     }
 }
