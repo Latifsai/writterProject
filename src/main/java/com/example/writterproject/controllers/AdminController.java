@@ -10,20 +10,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/managers")
 public class AdminController {
-
     private final UserService service;
-
     public AdminController(UserService service) {
         this.service = service;
     }
-
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
     public List<UserResponseDTO> getAll() {
         return service.findAll();
     }
-
-
     @GetMapping("/{name}")
     @ResponseStatus(HttpStatus.FOUND)
     public UserResponseDTO find(@PathVariable(name = "name") String name) {
