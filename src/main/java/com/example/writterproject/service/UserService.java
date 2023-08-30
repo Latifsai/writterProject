@@ -35,6 +35,10 @@ public class UserService {
         return mapper.toResponse(user);
     }
 
+    public User findUserByName (String userName) {
+        return repository.findByUsername(userName)
+                .orElseThrow(() -> new NotFoundException("User not found!"));
+    }
 
     public User findByUserNameForTask(String userName) {
         return repository.findByUsername(userName)
