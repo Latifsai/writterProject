@@ -14,7 +14,6 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Service
-
 public class JwtTokenService {
 
     @Value("${jwt.lifetime}")
@@ -41,7 +40,7 @@ public class JwtTokenService {
 
     public String checkUserNameFromJwt(String token) {
         try {
-            return verifier.verify(token).getSubject();
+            return verifier.verify(token).getSubject(); //<-- userName
         } catch (JWTVerificationException e) {
             throw new JWTVerificationException("Wrong token " + token);
         }

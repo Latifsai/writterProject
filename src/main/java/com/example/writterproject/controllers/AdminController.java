@@ -2,13 +2,15 @@ package com.example.writterproject.controllers;
 
 import com.example.writterproject.dto.userDTO.UserResponseDTO;
 import com.example.writterproject.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/managers")
+@RequestMapping("/api/admins")
+@Slf4j
 public class AdminController {
     private final UserService service;
     public AdminController(UserService service) {
@@ -17,6 +19,7 @@ public class AdminController {
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
     public List<UserResponseDTO> getAll() {
+        log.info("find all users!");
         return service.findAll();
     }
     @GetMapping("/{name}")

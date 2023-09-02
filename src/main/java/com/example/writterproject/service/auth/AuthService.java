@@ -21,10 +21,10 @@ public class AuthService {
 
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getUserName(), request.getPassword())
-            );
+                    new UsernamePasswordAuthenticationToken(request.getUserName(), request.getPassword()));
+
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("Incorrect login / password!");
+            throw new BadCredentialsException("Incorrect login/password!");
         }
 
         return jwtTokenService.jwtGenerate(request);

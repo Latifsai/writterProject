@@ -37,10 +37,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (header != null && header.startsWith(BARRIER_PREFIX)) {
             prepareUserName(header, request);
             filterChain.doFilter(request, response);
-
         }
-
-
     }
 
     private void prepareUserName(String header, HttpServletRequest request) {
